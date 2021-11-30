@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Security </title>
+
+    <style>
+        .container{
+        width:300px;
+        height:220px;
+        margin-top:15px;
+        border:2px solid red;
+        border-radius:6px;
+        background-color:#cabfe3;
+        }
+
+        input{
+        border:2px solid black;
+        border-radius:6px;
+        font-size:15px;
+        padding:2px;
+        padding-left:8px;
+        margin:6px;
+        }
+
+        label{
+        margin:6px;
+        font-size:18px;
+        font-weight:bold;
+        }
+
+        .signIn{
+        background-color:red;
+        color:white;
+        border-radius:6px;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <h3>Enter your username and password</h3>
+    <form method="post">
+        <div><label for="username"> User Name : <input type="text" name="username" id="username" placeholder=""/> </label></div>
+        <div><label for="password"> Password: <input type="password" name="password" id="password" /> </label></div>
+        <div><input type="submit" value="Sign In" class="signIn"/></div>
+    </form>
+
+</div>
+</body>
+</html>

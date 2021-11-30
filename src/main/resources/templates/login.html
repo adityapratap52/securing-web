@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Web Security Login </title>
+
+    <style>
+        .container{
+        width:300px;
+        height:240px;
+        margin-top:15px;
+        border:2px solid red;
+        border-radius:6px;
+        background-color:#cabfe3;
+        }
+
+        input{
+        border:2px solid black;
+        border-radius:6px;
+        font-size:15px;
+        padding:2px;
+        padding-left:8px;
+        margin:6px;
+        }
+
+        label{
+        margin:6px;
+        font-size:18px;
+        font-weight:bold;
+        }
+
+        .signIn{
+        background-color:red;
+        color:white;
+        border-radius:6px;
+        }
+
+        .condition{
+        margin-top:4px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+<div th:if="${param.error}" style="color:red" class="condition">
+    Invalid username and password.
+</div>
+<div th:if="${param.logout}" style="color:red" class="condition">
+    You have been logged out.
+</div>
+    <h3>Enter your username and password</h3>
+<form th:action="@{/login}" method="post">
+    <div><label for="username"> User Name : <input type="text" name="username" id="username" placeholder=""/> </label></div>
+    <div><label for="password"> Password: <input type="password" name="password" id="password" /> </label></div>
+    <div><input type="submit" value="Sign In" class="signIn"/></div>
+</form>
+</div>
+</body>
+</html>

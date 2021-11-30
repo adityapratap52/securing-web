@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Web Security </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <style>
+
+    .container{
+    padding:20px;
+    background-color:#d3a4eb;
+    width:600px;
+    height:570px;
+    margin: auto;
+    margin-top: 60px;
+    border-radius:8px;
+    }
+
+    label{
+    font-weight:bold;
+    font-size:20px;
+    margin-left:10px;
+    }
+
+    .formAttributes{
+    border-radius:6px;
+    font-size:20px;
+    padding:8px;
+    width:550px;
+    margin:0px 40px 0px 12px;
+    }
+
+    #submit{
+    background-color:black;
+    color:white;
+    border-radius:6px;
+    margin-top:20px;
+    }
+
+    li{
+    list-style:none;
+    padding:3px 57px 5px 22px;
+    color:white;
+    cursor:pointer;
+    font-size:18px;
+    }
+
+    ul{
+    display:flex;
+    flex-direction:row;
+    }
+
+    nav{
+    padding:1px;
+    margin-bottom:14px;
+    width:100%;
+    background-color:black;
+    border-radius:6px;
+    }
+
+    a{
+    color:white;
+    margin-left:212px;
+    text-decoration:none;
+    }
+
+    #signOut{
+    font-size:16px;
+    background-color:black;
+    border:none;
+    color:white;
+    border-radius:5px;
+    width:100px;
+    cursor:pointer;
+    }
+
+    </style>
+
+
+</head>
+<body>
+<div class="container">
+
+<nav>
+    <ul>
+        <li>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Home" id="signOut"/>
+            </form>
+        </li>
+        <li><a href="/employee">See the List</a></li>
+    </ul>
+</nav>
+
+<form th:action="@{/employee/employeedata}" th:object="${Employee}" method="post" id="employee">
+    <div>
+        <label for="jobTitleName">JobTitle:</label><br>
+        <input type="text" name="jobTitleName" id="jobTitleName" class="formAttributes" placeholder="enter your job title"/>
+    </div>
+
+    <div>
+        <label for="firstName">Firstname:</label><br>
+        <input type="text" name="firstName" id="firstName" class="formAttributes" placeholder="enter your fist name"/>
+    </div>
+
+    <div>
+        <label for="lastName">Lastname:</label><br>
+        <input type="text" name="lastName" id="lastName" class="formAttributes" placeholder="enter your last name"/>
+    </div>
+
+    <div>
+        <label for="phoneNumber">PhoneNumber:</label><br>
+        <input type="number" name="phoneNumber" id="phoneNumber" class="formAttributes" placeholder="enter your phone number"/>
+    </div>
+
+    <div>
+        <label for="emailAddress">EmailId:</label><br>
+        <input type="email" name="emailAddress" id="emailAddress" class="formAttributes" placeholder="enter your emailId"/>
+    </div>
+
+    <div>
+        <input type="submit" value="Submit" id="submit" class="formAttributes" />
+    </div>
+</form>
+
+<!--<a href="/employee">Click here to see the list</a>-->
+
+<!--<form th:action="@{/logout}" method="post">-->
+<!--    <input type="submit" value="Sign Out" id="signOut"/>-->
+<!--</form>-->
+</div>
+</body>
+
+<script>
+
+    async function postFormDataAsJson({ url , formData }) {
+    console.log(url)
+	const plainFormData = JSON.stringify(Object.fromEntries(formData.entries());
+	console.log(plainFormData)
+
+	const fetchOptions = {
+
+	   credentials: 'include',
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Accept: "application/json",
+		},
+		body: plainFormData,
+	};
+
+	const response = await fetch(url, fetchOptions);
+    console.log(response);
+	if (!response.ok) {
+		const errorMessage = await response.text();
+		throw new Error(errorMessage);
+	}
+
+	return response.json();
+}
+
+async function handleFormSubmit(event) {
+	event.preventDefault();
+
+	const form = event.currentTarget;
+	const url = "/employee/employeedata";
+    console.log(form)
+	try {
+		const formData = new FormData(form);
+
+		const responseData = await postFormDataAsJson({ url, formData });
+
+		console.log({ responseData });
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+const data = document.getElementById("employee");
+
+data.addEventListener("submit", handleFormSubmit);
+</script>
+
+</html>
